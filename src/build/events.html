@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Ochin Pakhi</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100&display=swap" rel="stylesheet">
+  <style>
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>Welcome to Ochin Pakhi</h1>
+  <nav>
+    <ul>
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./performance.html">Performances</a></li>
+      <li><a href="./events.html">Events</a></li>
+      <li><a href="#">Members</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="grid">
+
+  </div>
+  <div class="arrow-buttons">
+    <button id="prevButton" disabled>&larr; Previous</button>
+    <button id="nextButton">Next &rarr;</button>
+  </div>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", async function() {
+      let x = 1;
+      let n = 9; // Specify the total number of orders (change it according to your requirement)
+      const apiToken = await getApiToken();
+
+      let orderData = []; // Array to store order data
+
+      async function fetchOrders() {
+        orderData.length = 0; // Clear the orderData array
+        for (let i = x; i <= n; i++) {
+          const order = i;
+          const response = await sendAPIRequest(order, apiToken);
+          if (response) {
+            orderData.push(response);
+          }
+        }
+
+        // Sort orderData based on publishedAt value
+        orderData.sort((a, b) => {
+          const publishedAtA = new Date(a.publishedAt);
+          const publishedAtB = new Date(b.publishedAt);
+          return publishedAtB - publishedAtA;
+        });
+
+        // Generate divs in the sorted order
+        document.querySelector('.grid').innerHTML = ''; // Clear previous content
+        orderData.forEach(order => {
+          const title = order.title;
+          const publishedAt = formatDate(order.publishedAt); // Format the date
+          const timing = order.timing;
+          const description = order.description;
+
+          const newDiv = document.createElement('div');
+          newDiv.classList.add('content');
+          newDiv.innerHTML = `<h4>${title}</h4>`;
+
+          const timingPre = document.createElement('pre');
+          timingPre.textContent = `Timing: ${publishedAt}`; // Updated line
+          timingPre.style.textAlign = 'center';
+
+          const descriptionPre = document.createElement('pre');
+          descriptionPre.textContent = `Description: ${description}`; // Updated line
+          descriptionPre.style.textAlign = 'justify';
+          descriptionPre.style.textJustify = 'inter-word';
+
+          newDiv.appendChild(timingPre);
+          newDiv.appendChild(descriptionPre);
+
+          document.querySelector('.grid').appendChild(newDiv);
+        });
+
+        updateButtonStates(); // Update the button states after fetching new orders
+      }
+
+      async function getApiToken() {
+        const tokenResponse = await fetch('/api');
+        const token = await tokenResponse.text();
+        return token.trim();
+      }
+
+      async function sendAPIRequest(order, token) {
+        const url = `http://localhost:1337/api/events/${order}`; // Updated API endpoint
+        const options = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        };
+
+        try {
+          const response = await fetch(url, options);
+
+          if (response.ok) {
+            const json = await response.json();
+            const title = json.data.attributes.Name;
+            const publishedAt = json.data.attributes.publishedAt;
+            const timing = json.data.attributes.timing; // Additional JSON data
+            const description = json.data.attributes.description; // Additional JSON data
+
+            return {
+              title,
+              publishedAt,
+              timing,
+              description
+            };
+          } else if (response.status === 404) {
+            console.error("API request failed for order", order, ". Error:", response.status);
+          } else {
+            console.error("API request failed for order", order, ". Error:", response.status);
+          }
+        } catch (error) {
+          console.error("API request failed for order", order, ". Error:", error);
+        }
+      }
+
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+      }
+
+      function updateButtonStates() {
+        const prevButton = document.getElementById("prevButton");
+        const nextButton = document.getElementById("nextButton");
+
+        prevButton.disabled = x === 1; // Disable previous button if x is 1
+
+        prevButton.addEventListener("click", function() {
+          if (x > 1) {
+            x -= 9;
+            n -= 9;
+            fetchOrders();
+          } 
+        });
+
+        nextButton.addEventListener("click", function() {
+          x += 9;
+          n += 9;
+          fetchOrders();
+        });
+      }
+
+      fetchOrders(); // Fetch initial orders on page load
+    });
+  </script>
+</main>
+
+<footer>
+  <footer>
+    <a href="http://localhost:1337/admin" style="text-decoration: none; color: inherit;">
+      &copy; 2023 Ochin Pakhi
+    </a>
+  </footer>
+</footer>
+</body>
+</html>

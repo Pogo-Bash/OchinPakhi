@@ -1,0 +1,231 @@
+/* Global Styles */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 100;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  background-color: #f2e4c8;
+  text-align: center;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+
+
+/* Header Styles */
+header {
+  background-color: #d4af37;
+  color: #fff;
+  padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+  text-align: center;
+}
+
+nav {
+  text-align: center;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav a {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  background-color: #d4af37;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+nav a:hover {
+  background-color: #c7a024;
+}
+
+nav a.active {
+  background-color: #c7a024;
+} 
+
+/* Main Content Styles */
+main {
+  flex: 1;
+  min-height: calc(100vh - 160px); /* 100% viewport height minus header and footer height */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2e4c8;
+  color: #fff;
+  text-align: justify;
+}
+
+
+
+main p {
+  color: #5c3317;
+  padding: 10px;
+  font-size: 23px;
+}
+
+footer {
+  background-color: #d4af37;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto; /* Push the footer to the bottom */
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Div Styles */
+main .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+main .grid div {
+  background-color: #c7a024;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  border-radius: 5px;
+  width: 350px;
+  min-height: 200px; /* Adjust the minimum height as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main .grid div .content {
+  margin-top: 20px;
+  text-align: left;
+  font-size: 16px;
+  overflow: auto;
+  white-space: pre-wrap;
+  flex-grow: 1;
+}
+
+.main .grid div:nth-child(-n+3) {
+  display: none;
+}
+
+.main .grid div:last-child {
+  align-self: stretch; /* Stretch the last item vertically */
+}
+
+.main .grid div:last-child .content {
+  flex-grow: 1;
+}
+
+/* Arrow Buttons */
+.arrow-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Push the buttons to the bottom */
+  padding: 20px 0;
+  font-family: 'Josefin Sans', sans-serif; /* Use the same font as other elements */
+}
+
+.arrow-buttons button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px; /* Adjust the font size */
+  color: #c7a024;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.arrow-buttons button:hover {
+  color: #5c3317;
+}
+
+.arrow-buttons button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+}
+
+.content pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+h2 {
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: 3em;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #d4af37;
+  padding: 0.2em 0.4em;
+  display: inline-block;
+  margin: 0.2em auto;
+  background-image: linear-gradient(#5c3317, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Add the standard property */
+  
+  /* Add the following properties to center the h2 element */
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+body::before {
+  content: "";
+  background-image: url('./Images/instrument.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 0.5; /* replace with your desired opacity value */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+header {
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  position: relative;
+  z-index: 1;
+}
