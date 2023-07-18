@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"node index.js\" \"cd ./OchinPakhi && npm run develop\"",
+    "start": "node index.js",
     "test": "npm start"
   },
   "repository": {
